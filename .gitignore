@@ -1,0 +1,5 @@
+venv/
+fluff/
+data/
+.idea/
+.DS_store

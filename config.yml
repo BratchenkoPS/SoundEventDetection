@@ -1,0 +1,9 @@
+Download: False
+
+DataLoader:
+  desed_link: 'https://zenodo.org/record/3588172/files/DESEDpublic_eval.tar.gz?download=1z'
+  esc_link: 'https://codeload.github.com/karolpiczak/ESC-50/zip/master'
+
+DataPreprocess:
+  sr: 44100
+  max_length: 1.0
