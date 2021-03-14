@@ -39,7 +39,8 @@ data than test. Although the point of task was to build a model using *only* ESC
 [PANNs](https://github.com/qiuqiangkong/audioset_tagging_cnn) or 
 [attention CNN](https://www.kaggle.com/hidehisaarai1213/introduction-to-sound-event-detection)
 but those two a kind of hard to digest if it's your first time working with audio.
-3) Augmentations: Noise injection, pitch shifting, changing speed, etc. Sadly we didn't had much time to do so
+3) Augmentations: Noise injection, pitch shifting, changing speed, etc.
+4) Add more features: spectral rolloff, ZCR, spectral centroid, etc.
 
 ## 4) How to run
 ```git clone https://github.com/BratchenkoPS/SoundEventDetection``` <br />
