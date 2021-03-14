@@ -4,7 +4,17 @@ import torch.nn as nn
 
 
 class Resnet18Multi(nn.Module):
-    def __init__(self, n_classes):
+    """
+    Class for modification of resnet18 architecture for multilabel classification of audio
+    """
+
+    def __init__(self, n_classes: int) -> None:
+        """
+        Initialises the model with changed conv1 layer (for 1 channel audio) and fully-connected layer for correct
+         number of classes
+        Args:
+            n_classes: number of classes for output
+        """
         super().__init__()
         resnet = resnet18(pretrained=True)
         resnet.fc = nn.Linear(in_features=512, out_features=n_classes, bias=True)

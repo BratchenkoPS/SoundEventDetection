@@ -1,9 +1,21 @@
-Download: False
+Download: True
 
-DataLoader:
+Downloader:
   desed_link: 'https://zenodo.org/record/3588172/files/DESEDpublic_eval.tar.gz?download=1z'
   esc_link: 'https://codeload.github.com/karolpiczak/ESC-50/zip/master'
 
 DataPreprocess:
   sr: 44100
   max_length: 1.0
+  classes_mapping:
+    Dog: 'dog'
+    Cat: 'cat'
+    Alarm_bell_ringing: 'clock_alarm'
+    Running_water: 'pouring_water'
+    Vacuum_cleaner: 'vacuum_cleaner'
+
+Model:
+  num_classes: 5
+  num_epochs: 50
+  learning_rate: 0.001
+  threshold: 0.6

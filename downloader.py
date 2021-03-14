@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 
 
-class DataLoader:
+class Downloader:
     """
     Downloads and unpacks DESED and ESC-50 datasets into given folders.
     """
