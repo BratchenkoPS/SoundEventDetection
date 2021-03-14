@@ -106,7 +106,7 @@ class DataPreprocess:
         test_meta = self.get_one_hot_encoding(test_meta)
         test_meta.to_csv(path_to_test_csv / 'test.csv', index=False)
 
-    def get_train_data(self, path_to_train_data='data/train'):
+    def get_train_data(self, path_to_train_data='data/train') -> None:
         """
         Splits 5 second audio files from ESC-50 with relevant classes into 1 sec files
         Args:
@@ -125,27 +125,9 @@ class DataPreprocess:
         self.esc_df.sort_values(by='filename', inplace=True)
         self.esc_df.reset_index(inplace=True, drop=True)
 
-        files = []
-        labels = []
         logging.info('Starting to build train dataset from ESC-50')
-        for i in tqdm(range(len(self.esc_df))):
-            filename = self.esc_df['filename'][i]
-            label = self.esc_df['category'][i]
 
-            audio, _ = librosa.load(self.path_to_esc_audio / filename, sr=self.sr)
-            audio_length = int(audio.shape[0] // self.sr)
-
-            audio_part_start = 0
-            for k in range(audio_length):
-                new_filename = str(k) + filename
-                audio_part_end = (self.sr * (k + 1))
-                audio_part = audio[audio_part_start:audio_part_end]
-
-                soundfile.write(path_to_train_audio / new_filename, audio_part, samplerate=self.sr)
-                audio_part_start = audio_part_end
-
-                files.append(new_filename)
-                labels.append(label)
+        files, labels = self.get_oversampling(path_to_train_audio)
 
         train_meta = pd.DataFrame({'filename': files, 'labels': labels})
         train_meta = self.get_one_hot_encoding(train_meta)
@@ -194,26 +176,43 @@ class DataPreprocess:
         values = ','.join(values)
         return values
 
-    # def get_oversampling(self, path_to_train_audio):
-    #     files = []
-    #     labels = []
-    #     for i in tqdm(range(len(self.esc_df))):
-    #         filename = self.esc_df['filename'][i]
-    #         label = self.esc_df['category'][i]
-    #
-    #         for j in range(10):
-    #
-    #             audio, _ = librosa.load(self.path_to_esc_audio / filename, sr=self.sr, offset=j*0.1)
-    #             audio_length = int(audio.shape[0] // self.sr)
-    #
-    #             audio_part_start = 0
-    #             for k in range(audio_length):
-    #                 new_filename = str(k) + str(j) + filename
-    #                 audio_part_end = (self.sr * (k + 1))
-    #                 audio_part = audio[audio_part_start:audio_part_end]
-    #
-    #                 soundfile.write(path_to_train_audio / new_filename, audio_part, samplerate=self.sr)
-    #                 audio_part_start = audio_part_end
-    #
-    #                 files.append(new_filename)
-    #                 labels.append(label)
+    def get_oversampling(self, path_to_train_audio, oversampling_ratio=10):
+        """
+        Oversamples the train data by setting offset in the audio so we get 1 sec audio like this:
+        file1 = 0:1 sec
+        file2 = 0.1:1.1 sec
+        etc
+
+        Args:
+            path_to_train_audio: folder with audiofiles
+            oversampling_ratio: how many new samples we want, atm works with only 10
+
+        Returns: filenames and targets
+
+        """
+        files = []
+        labels = []
+        for i in tqdm(range(len(self.esc_df))):
+            filename = self.esc_df['filename'][i]
+            label = self.esc_df['category'][i]
+
+            for j in range(oversampling_ratio):
+
+                audio, _ = librosa.load(self.path_to_esc_audio / filename, sr=self.sr, offset=j*0.1)
+                audio_length = int(audio.shape[0] // self.sr)
+
+                audio_part_start = 0
+                for k in range(audio_length):
+                    new_filename = str(k) + str(j) + filename
+                    audio_part_end = (self.sr * (k + 1))
+                    audio_part = audio[audio_part_start:audio_part_end]
+
+                    if audio_part_end - audio_part_start != self.sr:
+                        logging.debug('Something is wrong with audio length in oversampling')
+
+                    soundfile.write(path_to_train_audio / new_filename, audio_part, samplerate=self.sr)
+                    audio_part_start = audio_part_end
+
+                    files.append(new_filename)
+                    labels.append(label)
+        return files, labels

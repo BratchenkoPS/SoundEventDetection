@@ -22,7 +22,7 @@ class AudioDataset(Dataset):
             n_fft: length of the FFT window
             hop_length: number of samples between successive frames
         """
-        self.dataframe = pd.read_csv(Path(path_to_csv).absolute()).iloc[:20]
+        self.dataframe = pd.read_csv(Path(path_to_csv).absolute())
         self.path_to_sound_files = Path(path_to_sound_files).absolute()
         self.sr = sr
         self.transform = transform

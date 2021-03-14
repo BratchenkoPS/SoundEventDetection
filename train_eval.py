@@ -5,14 +5,13 @@ import logging
 from tqdm import tqdm
 from sklearn.metrics import f1_score
 from pathlib import Path
-from typing import List
 
 
 def train(epochs: int,
           model: torch.nn.Module,
           device: torch.device,
-          train_dataloader: torch.utils.data.Dataloader,
-          test_dataloader: torch.utils.data.Dataloader,
+          train_dataloader,
+          test_dataloader,
           optimizer: torch.optim.Optimizer,
           criterion: torch.nn.Module,
           threshold: float) -> None:
@@ -65,7 +64,7 @@ def train(epochs: int,
 
 
 def evaluate(model: torch.nn.Module,
-             test_dataloader: torch.utils.data.Dataloader,
+             test_dataloader,
              device: torch.device,
              threshold: float) -> float:
     """

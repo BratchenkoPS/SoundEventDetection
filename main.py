@@ -29,11 +29,11 @@ if __name__ == '__main__':
 
     train_dataset = AudioDataset(path_to_sound_files='data/train/audio',
                                  path_to_csv='data/train/meta/train.csv')
-    train_dataloader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=20, shuffle=True)
 
     test_dataset = AudioDataset(path_to_sound_files='data/test/audio',
                                 path_to_csv='data/test/meta/test.csv')
-    test_dataloader = DataLoader(test_dataset, batch_size=16, shuffle=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=20, shuffle=True)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
