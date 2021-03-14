@@ -13,3 +13,9 @@ DataPreprocess:
     Alarm_bell_ringing: 'clock_alarm'
     Running_water: 'pouring_water'
     Vacuum_cleaner: 'vacuum_cleaner'
+
+Model:
+  num_classes: 5
+  num_epochs: 50
+  learning_rate: 0.001
+  threshold: 0.6

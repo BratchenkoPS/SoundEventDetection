@@ -193,3 +193,27 @@ class DataPreprocess:
         values = sorted(list(set(values)))
         values = ','.join(values)
         return values
+
+    # def get_oversampling(self, path_to_train_audio):
+    #     files = []
+    #     labels = []
+    #     for i in tqdm(range(len(self.esc_df))):
+    #         filename = self.esc_df['filename'][i]
+    #         label = self.esc_df['category'][i]
+    #
+    #         for j in range(10):
+    #
+    #             audio, _ = librosa.load(self.path_to_esc_audio / filename, sr=self.sr, offset=j*0.1)
+    #             audio_length = int(audio.shape[0] // self.sr)
+    #
+    #             audio_part_start = 0
+    #             for k in range(audio_length):
+    #                 new_filename = str(k) + str(j) + filename
+    #                 audio_part_end = (self.sr * (k + 1))
+    #                 audio_part = audio[audio_part_start:audio_part_end]
+    #
+    #                 soundfile.write(path_to_train_audio / new_filename, audio_part, samplerate=self.sr)
+    #                 audio_part_start = audio_part_end
+    #
+    #                 files.append(new_filename)
+    #                 labels.append(label)
