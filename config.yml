@@ -1,4 +1,4 @@
-Download: False
+Download: True
 
 Downloader:
   desed_link: 'https://zenodo.org/record/3588172/files/DESEDpublic_eval.tar.gz?download=1z'
