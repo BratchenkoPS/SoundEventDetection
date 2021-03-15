@@ -1,6 +1,8 @@
 import yaml
 import logging
 import torch
+import random
+import numpy as np
 
 from downloader import Downloader
 from dataset import AudioDataset
@@ -20,6 +22,14 @@ if __name__ == '__main__':
                                 config['Downloader']['esc_link'])
         downloader.download_data()
         downloader.unpack_data()
+
+    SEED = 42
+
+    random.seed(SEED)
+    np.random.seed(SEED)
+    torch.manual_seed(SEED)
+    torch.cuda.manual_seed(SEED)
+    torch.backends.cudnn.deterministic = True
 
     preprocess = DataPreprocess(config['DataPreprocess']['sr'],
                                 config['DataPreprocess']['max_length'],

@@ -40,6 +40,7 @@ data than test. Although the point of task was to build a model using *only* ESC
 [attention CNN](https://www.kaggle.com/hidehisaarai1213/introduction-to-sound-event-detection)
 but those two a kind of hard to digest if it's your first time working with audio.
 3) Augmentations: Noise injection, pitch shifting, changing speed, etc. Sadly we didn't had much time to do so
+4) Dive deeper into the current data and model, look at the confusion matrix, make train/test distribution more similar, etc.
 
 ## 4) How to run
 ```git clone https://github.com/BratchenkoPS/SoundEventDetection``` <br />
